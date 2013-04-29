@@ -37,9 +37,10 @@ import javax.swing.JFileChooser;
 public class Photostat_FXML extends Application {
     
     private JFileChooser chooser;
+    private statistics stats;
     
     @Override
-    public void start(Stage primaryStage) {
+    public void start(final Stage primaryStage) {
         primaryStage.setTitle("Photostat v0.1");
         
         GridPane grid = new GridPane();
@@ -51,7 +52,7 @@ public class Photostat_FXML extends Application {
         Text scenetitle = new Text("Analyze your pics!");
         scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
         grid.add(scenetitle, 0, 0, 2, 1);
-
+        
         Label folderText = new Label("Folder:");
         folderText.setAlignment(Pos.BASELINE_LEFT);
         grid.add(folderText, 0, 1);
@@ -59,56 +60,58 @@ public class Photostat_FXML extends Application {
         final Label folderLabel = new Label("./");
         folderLabel.setAlignment(Pos.CENTER);
         grid.add(folderLabel, 1, 1);
-
+        
         final Button folderButton = new Button("Select Folder:");
         folderButton.setAlignment(Pos.CENTER);
         grid.add(folderButton, 0, 3);
-
+        
         folderButton.setOnAction(new EventHandler<ActionEvent>() {
- 
-        @Override
-        public void handle(ActionEvent e) {
-            folderLabel.setText("PRESSED");
             
-              DirectoryChooser dirChooser = new DirectoryChooser();
-              dirChooser.setInitialDirectory(new File("/Users/kargm/Desktop"));
-              
-              //Show open file dialog
-              File file = dirChooser.showDialog(null);
-              try {
-                folderLabel.setText(file.getPath());
-              } catch (NullPointerException e2) {
-                  System.out.println("No file selected");
-              }
+            @Override
+            public void handle(ActionEvent e) {
+                folderLabel.setText("PRESSED");
+                
+                DirectoryChooser dirChooser = new DirectoryChooser();
+                dirChooser.setInitialDirectory(new File("/Users/kargm/Desktop"));
+                
+                //Show open file dialog
+                File file = dirChooser.showDialog(null);
+                try {
+                    folderLabel.setText(file.getPath());
+                } catch (NullPointerException e2) {
+                    System.out.println("No file selected");
+                }
             }
         });
         
         Button analyzeButton = new Button("Go!");
         grid.add(analyzeButton, 1, 3);
         
+        
+        
         analyzeButton.setOnAction(new EventHandler<ActionEvent>() {
-             @Override
+            @Override
             public void handle(ActionEvent e) {
-             analyzer a = new analyzer();
-			try {
-				// Here analyze data and make call to visualization
-				statistics stats = a.analyze(folderLabel.getText());
-				visualization vis = new visualization();
-				vis.visualize(stats);
-			} catch (ImageProcessingException e1) {
-				e1.printStackTrace();
-			} catch (IOException ex) {
+                analyzer a = new analyzer();
+                try {
+                    // Here analyze data and make call to visualization
+                    stats = a.analyze(folderLabel.getText());
+                    visualization vis = new visualization();
+                    vis.visualize(stats, primaryStage);
+                } catch (ImageProcessingException e1) {
+                    e1.printStackTrace();
+                } catch (IOException ex) {
                     Logger.getLogger(Photostat_FXML.class.getName()).log(Level.SEVERE, null, ex);
-             }
-        }});
-
+                }
+            }});
+        
         Scene scene = new Scene(grid, 800, 275);
         primaryStage.setScene(scene);
         
         scene.getStylesheets().add(Photostat_FXML.class.getResource("photostat_FXML.css").toExternalForm());
         primaryStage.show();
     }
-
+    
     /**
      * The main() method is ignored in correctly deployed JavaFX application.
      * main() serves only as fallback in case the application can not be
