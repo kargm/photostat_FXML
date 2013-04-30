@@ -8,6 +8,7 @@ import com.drew.metadata.exif.ExifSubIFDDirectory;
 import java.util.HashMap;
 import java.util.Calendar;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class analyzer {
@@ -36,7 +37,9 @@ public class analyzer {
     private statistics getStatistics(File[] files) throws IOException {
         try{
             for (File file : files) {
-                if (!file.getName().equals(".DS_Store")) { //.DS_Store file causes problems TODO: Find general solution for more problem-files
+                if (file.getName().startsWith(".")) {
+                    System.out.println("Ignoring system file: " + file);
+                } else {
                     if (file.isDirectory()) {
                         //.out.println("Directory: " + file.getName());
                         getStatistics(file.listFiles()); // Calls same method again.
@@ -51,7 +54,10 @@ public class analyzer {
             }
         }
         catch (ImageProcessingException e){
-            System.out.println("Unsupported file type. Skipping...");
+            System.out.println("Unsupported file type. Skipping file: " + e);
+        }
+        catch (FileNotFoundException fe) {
+            System.out.println("!!! WARNING: " + fe);
         }
         return stats;
     }
