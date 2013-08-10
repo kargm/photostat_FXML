@@ -62,7 +62,7 @@ public class analyzer {
         return stats;
     }
     
-    public void analyseDates(ExifSubIFDDirectory dir,
+    private void analyseDates(ExifSubIFDDirectory dir,
             HashMap<String, Integer> days_map,
             HashMap<String, Integer> months_map,
             HashMap<String, Integer> year_map){
@@ -78,6 +78,7 @@ public class analyzer {
             testKeyAndAdd(year_map, year);
             testKeyAndAdd(days_map, days_key);
             testKeyAndAdd(months_map, month_key);
+            
         } catch (NullPointerException e) {
             //testKeyAndAdd(days_map, "Unknown");
             //testKeyAndAdd(months_map, "Unknown");
