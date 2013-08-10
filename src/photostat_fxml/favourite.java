@@ -12,6 +12,18 @@ public class favourite {
     public Integer number;
     public Float percentage;
     
+    public String printName() {
+        return name.toString();
+    }
+    
+    public String printPercentage() {
+        return String.format("%.2f", percentage);
+    }
+    
+    public String printNumber() {
+        return number.toString();
+    }
+    
     @Override
     public String toString() {
         return  name + " ( " + String.format("%.2f", percentage) + " % ), " + number; 
