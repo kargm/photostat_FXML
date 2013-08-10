@@ -15,6 +15,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
@@ -37,6 +38,10 @@ public class visualization {
         Scene scene = new Scene(grid, 1400, 600);
         primaryStage.setScene(scene);
         
+        Label fav_dayLabel = new Label("Favourite Day: " + stats.getFavourite(stats.days_map) + " pictures.");
+        Label fav_monthLabel = new Label("Favourite Month: " + stats.getFavourite(stats.months_map) + " pictures.");
+        Label fav_yearLabel = new Label("Favourite Year: " + stats.getFavourite(stats.year_map) + " pictures.");
+        
         ObservableList<PieChart.Data> daysChartData = convertHashMapToPieChartData(stats.days_map);
         ObservableList<PieChart.Data> monthChartData = convertHashMapToPieChartData(stats.months_map);
         ObservableList<PieChart.Data> yearChartData = convertHashMapToPieChartData(stats.year_map);
@@ -48,6 +53,9 @@ public class visualization {
         grid.add(daysChart,0,0);
         grid.add(monthChart,1,0);
         grid.add(yearChart,2,0);
+        grid.add(fav_dayLabel,0,3);
+        grid.add(fav_monthLabel,0,4);
+        grid.add(fav_yearLabel,0,5);
     }
     
     public ObservableList<PieChart.Data> convertHashMapToPieChartData(HashMap<String, Integer> hashmap){

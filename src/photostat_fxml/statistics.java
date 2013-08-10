@@ -26,7 +26,7 @@ public class statistics {
     
     // This function gets the name and value of the HashEntry with the highest number of keys
     // Also it calculates the percentage with respect to the total amount of numbers
-    private favourite getFavourite(HashMap<String, Integer> map) {
+    public favourite getFavourite(HashMap<String, Integer> map) {
         favourite fav = new favourite();
         int numberEntries = 0;
         

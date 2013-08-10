@@ -14,7 +14,7 @@ public class favourite {
     
     @Override
     public String toString() {
-        return  name + " ( " + String.format("%.2f", percentage) + " % , " + number + ")"; 
+        return  name + " ( " + String.format("%.2f", percentage) + " % ), " + number; 
     }
 }
 
