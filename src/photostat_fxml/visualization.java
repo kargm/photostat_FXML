@@ -17,6 +17,9 @@ import javafx.scene.chart.PieChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 /**
@@ -38,6 +41,24 @@ public class visualization {
         Scene scene = new Scene(grid, 1400, 600);
         primaryStage.setScene(scene);
         
+        Text fav_day_intro = new Text("You seem to be a ");
+        Text fav_day_name = new Text(stats.getFavourite(stats.days_map).printName());
+        Text fav_day_middle_1 = new Text(" photographer. You took ");
+        Text fav_day_percent = new Text(stats.getFavourite(stats.days_map).printPercentage());
+        Text fav_day_middle_2 = new Text(" % of all your pictures then.");
+        fav_day_intro.setFont(Font.font("Tahoma", FontWeight.NORMAL, 12));
+        fav_day_middle_1.setFont(Font.font("Tahoma", FontWeight.NORMAL, 12));
+        fav_day_middle_2.setFont(Font.font("Tahoma", FontWeight.NORMAL, 12));
+        fav_day_name.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+        fav_day_percent.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+        
+        GridPane fav_day_grid = new GridPane();
+        fav_day_grid.add(fav_day_intro,0,0);
+        fav_day_grid.add(fav_day_name,1,0);
+        fav_day_grid.add(fav_day_middle_1,2,0);
+        fav_day_grid.add(fav_day_percent,3,0);
+        fav_day_grid.add(fav_day_middle_2,4,0);
+        
         Label fav_dayLabel = new Label("Favourite Day: " + stats.getFavourite(stats.days_map) + " pictures.");
         Label fav_monthLabel = new Label("Favourite Month: " + stats.getFavourite(stats.months_map) + " pictures.");
         Label fav_yearLabel = new Label("Favourite Year: " + stats.getFavourite(stats.year_map) + " pictures.");
@@ -53,9 +74,7 @@ public class visualization {
         grid.add(daysChart,0,0);
         grid.add(monthChart,1,0);
         grid.add(yearChart,2,0);
-        grid.add(fav_dayLabel,0,3);
-        grid.add(fav_monthLabel,0,4);
-        grid.add(fav_yearLabel,0,5);
+        grid.add(fav_day_grid,0,3);
     }
     
     public ObservableList<PieChart.Data> convertHashMapToPieChartData(HashMap<String, Integer> hashmap){
